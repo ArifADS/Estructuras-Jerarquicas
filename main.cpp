@@ -8,17 +8,39 @@
 
 #include <iostream>
 #include "ArbolN.h"
+#include "ArbolBin.h"
 
-int main(int argc, const char * argv[])
+int main(){
+    
+    ArbolBin<string> a("Pedro"),b("Ramon"),c("Casique"),d("Arif"),e("Aaron"),f("Zapata"),g("Cuca"),copia;
+    
+    a.insertarSubArbol(e);
+    a.insertarSubArbol(f);
+    
+    a.insertarSubArbol(g);
+    
+    a.insertarSubArbol(b);
+    a.insertarSubArbol(c);
+    a.insertarSubArbol(d);
+
+    
+    copia = a;
+    a.preorden();
+    
+    
+    return 0;
+}
+
+int main2(int argc, const char * argv[])
 {
     cout << "begin\n";
-    ArbolN<char> a('a');
-    ArbolN<char> b('b');
-    ArbolN<char> c('c');
-    ArbolN<char> d('d');
-    ArbolN<char> e('e');
-    ArbolN<char> f('f');
-    ArbolN<char> g('g');
+    ArbolN<string> a("Pedro");
+    ArbolN<string> b("Ramon");
+    ArbolN<string> c("Casique");
+    ArbolN<string> d("Arif");
+    ArbolN<string> e("Aaron");
+    ArbolN<string> f("Zapata");
+    ArbolN<string> g("Cuca");
     
     
     ArbolN<char> copia;
@@ -36,7 +58,7 @@ int main(int argc, const char * argv[])
     a.insertarSubArbol(d);
     
     
-    copia = a;
+    //copia = a;
     
     //a.preorden();
     
