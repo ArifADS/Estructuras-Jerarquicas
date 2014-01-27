@@ -13,10 +13,13 @@
 #include "NodoArbol.h"
 #include "List.h"
 
+#define self (*this)
+
 template <class T>
 class ArbolN{
 private:
     NodoArbol<T>* nodoRaiz;
+
     
 public:
     
@@ -30,13 +33,14 @@ public:
     
     ArbolN(NodoArbol<T>* nodoR)
     {
-        this->nodoRaiz = nodoR;
+        self.nodoRaiz = nodoR;
     }
     
     //~ArbolN();
     ArbolN<T> operator=(ArbolN<T>& arbolCopia)
     {
-        copiarNodos(arbolCopia.getRaiz());
+        self.nodoRaiz = copiarNodos(arbolCopia.nodoRaiz);
+        return self;
     }
     
     bool isNull()
@@ -49,19 +53,22 @@ public:
         return nodoRaiz->getElemento();
     }
     
-    /*List<ArbolN> hijos()
+    List<ArbolN> hijos()
     {
         List<ArbolN>* listaHijos = new List<ArbolN>;
-        Node<NodoArbol*> auxNodo;
+        NodoArbol<T>* nodoAux;
         
-        auxNodo.setInfo(nodoRaiz.getHijoIzquierdo());
-        while (auxNodo != NULL)
-        {
-            listaHijos.addInfoAtPos(auxNodo);
+        nodoAux = nodoRaiz->getHijoIzquierdo();
+        
+        while (nodoAux != NULL) {
+            listaHijos->addInfoAtPos(*(new ArbolN<T>(nodoAux)),listaHijos->getLenght());
             
+            nodoAux = nodoAux->getHermanoDerecho();
         }
         
-    }*/
+        return *listaHijos;
+        
+    }
     
     void insertarSubArbol(ArbolN sArbol)
     {
@@ -81,18 +88,54 @@ public:
     }
     
     
-    void eliminarSubArbol(int pos);
+    void eliminarSubArbol(int pos)
+    {
+        NodoArbol<T>* aux, *aux2;
+        
+        aux = nodoRaiz->getHijoIzquierdo();
+        
+        if (pos == 0) {
+            nodoRaiz->setHijoIzquierdo(aux->getHermanoDerecho());
+            
+            
+        }
+        else{
+            for (int i = 0; i<pos && aux; i++)
+            {
+                aux2 = aux;
+                aux = aux->getHermanoDerecho();
+            }
+            
+            if (aux != NULL) {
+                aux2->setHermanoDerecho(aux->getHermanoDerecho());
+            }
+            
+
+        }
+        
+        delete aux;
+    }
     
     
     //RECORRIDOS
     
     void preorden()
     {
-        recorridoPreorden2(nodoRaiz);
+        recorridosDeOrden(self.nodoRaiz,0);
+    }
+    
+    void posorden()
+    {
+        recorridosDeOrden(nodoRaiz,1);
+    }
+    
+    void inorden()
+    {
+        recorridosDeOrden(nodoRaiz,2);
     }
     
 private:
-    static ArbolN<T>* copiarNodos(ArbolN<T>* p)
+    static NodoArbol<T>* copiarNodos(NodoArbol<T>* p)
     {
         NodoArbol<T>* nuevoNodo;
         
@@ -101,7 +144,9 @@ private:
         }
         else
         {
+            
             nuevoNodo = new NodoArbol<T>(p->getElemento(),copiarNodos(p->getHijoIzquierdo()),copiarNodos(p->getHermanoDerecho()));
+            
             return nuevoNodo;
         }
     }
@@ -120,19 +165,19 @@ private:
         }
     }
     
-    static void recorridoPreorden2(NodoArbol<T>* ptrRaiz)
+    static void recorridosDeOrden(NodoArbol<T>* ptrRaiz,int j)
     {
         if (ptrRaiz != NULL)
         {
-            //cout<< ptrRaiz->getElemento() << " "; // preorden
+            if (j == 0) cout<< ptrRaiz->getElemento() << " "; // preorden
             
-            recorridoPreorden2(ptrRaiz->getHijoIzquierdo());
+            recorridosDeOrden(ptrRaiz->getHijoIzquierdo(),j);
             
-            //cout<< ptrRaiz->getElemento() << " "; // PostOrden
+            if (j == 1) cout<< ptrRaiz->getElemento() << " "; // PostOrden
             
-            recorridoPreorden2(ptrRaiz->getHermanoDerecho());
+            recorridosDeOrden(ptrRaiz->getHermanoDerecho(),j);
             
-            cout<< ptrRaiz->getElemento() << " ";
+            if (j == 2) cout<< ptrRaiz->getElemento() << " "; // WTF IS THIS?
         }
         
         
@@ -141,5 +186,6 @@ private:
     
     
 };
+
 
 #endif /* defined(__Estructuras_Jerarquicas__ArbolN__) */

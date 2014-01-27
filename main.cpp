@@ -20,6 +20,10 @@ int main(int argc, const char * argv[])
     ArbolN<char> f('f');
     ArbolN<char> g('g');
     
+    
+    ArbolN<char> copia;
+    
+    
 
     
     b.insertarSubArbol(e);
@@ -31,9 +35,23 @@ int main(int argc, const char * argv[])
     a.insertarSubArbol(c);
     a.insertarSubArbol(d);
     
-    a.preorden();
+    
+    copia = a;
+    
+    //a.preorden();
+    
+    copia.preorden();
+    
+    //copia.eliminarSubArbol(0);
+    
+    cout << endl;
+    
+    copia.preorden();
+    
+    cout << "\nEl primer hijo del primer hijo de la raiz es: " << copia.hijos()[0].hijos()[0].raiz()<< endl;
     
     cout << "\nFinish\n";
+    
     
     return 0;
 }

@@ -24,6 +24,7 @@ public:
         this->hermanoDer = NULL;
     }
     
+    
     NodoArbol(T elem, NodoArbol<T>* izq, NodoArbol<T>* der)
     {
         this->elem = elem;
@@ -32,16 +33,16 @@ public:
     }
     
     T getElemento(){
-        return this->elem;
+        return this?this->elem:NULL;
     }
     
     
     NodoArbol<T>* getHijoIzquierdo(){
-        return this->hijoIzq;
+        return this?this->hijoIzq:NULL;
     }
     
     NodoArbol<T>* getHermanoDerecho(){
-        return this->hermanoDer;
+        return this?this->hermanoDer:NULL;
     }
     void setElemento(T elem){
         this->elem = elem;
