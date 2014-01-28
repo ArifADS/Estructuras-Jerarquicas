@@ -70,23 +70,6 @@ public:
         
     }*/
     
-    void insertarSubArbol2(ArbolBin sArbol)
-    {
-        NodoArbolBin<T>* aux;
-        
-        if (nodoRaiz->getHijoIzquierdo() == NULL) {
-            nodoRaiz->setHijoIzquierdo(sArbol.nodoRaiz);
-        }
-        else{
-            aux = nodoRaiz->getHijoIzquierdo();
-            while (aux->getHijoDerecho() != NULL) {
-                aux = aux->getHijoDerecho();
-            }
-            aux->setHijoDerecho(sArbol.nodoRaiz);
-        }
-        sArbol.nodoRaiz = NULL;
-    }
-    
     void insertarSubArbol(ArbolBin sArbol)
     {
         NodoArbolBin<T>* next, *prev;
@@ -137,6 +120,34 @@ public:
         delete aux;
     }
     
+    void bt(List<T>& inO, List<T>& preO)
+    {
+        nodoRaiz = buildTreePreIn(inO, preO, 0, 7);
+        
+    }
+    
+    
+    NodoArbolBin<T>* buildTreePreIn(List<T>& inO, List<T>& preO, int inFrom, int inTo)
+    {
+        NodoArbolBin<T>* nNodo;
+        
+        
+        if (preO.getLenght() == 0) {
+            return NULL;
+        }
+        
+        T preOelem = preO[0];
+        
+        preO.deleteAtPos(0);
+        
+        int i = inO.getPosWithInfo(preOelem);
+        
+        nNodo = new NodoArbolBin<T>(preOelem,buildTreePreIn(inO, preO,inFrom,i),buildTreePreIn(inO, preO,i,inTo));
+        
+        
+        
+        return nNodo;
+    }
     
     //RECORRIDOS
     

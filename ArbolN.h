@@ -121,17 +121,23 @@ public:
     
     void preorden()
     {
+        cout <<"Preorden:\t";
         recorridosDeOrden(self.nodoRaiz,0);
+        cout<<endl;
     }
     
     void posorden()
     {
+        cout <<"Posorden:\t";
         recorridosDeOrden(nodoRaiz,1);
+        cout<<endl;
     }
     
     void inorden()
     {
-        recorridosDeOrden(nodoRaiz,2);
+        cout <<"Inorden:\t";
+        recorridoInorden(nodoRaiz);
+        cout<<endl;
     }
     
 private:
@@ -167,21 +173,39 @@ private:
     
     static void recorridosDeOrden(NodoArbol<T>* ptrRaiz,int j)
     {
-        if (ptrRaiz != NULL)
+        if (!ptrRaiz) return;
+        if (j == 0) cout<< ptrRaiz->getElemento() << " "; // preorden
+        
+        recorridosDeOrden(ptrRaiz->getHijoIzquierdo(),j);
+        
+        if (j == 1) cout<< ptrRaiz->getElemento() << " "; // PostOrden
+        
+        recorridosDeOrden(ptrRaiz->getHermanoDerecho(),j);
+        
+    }
+    
+    static void recorridoInorden(NodoArbol<T>* ptrRaiz)
+    {
+        
+        NodoArbol<T>* aux;
+        if (ptrRaiz == NULL) return;
+        
+        recorridoInorden(ptrRaiz->getHijoIzquierdo());
+        
+        cout<< ptrRaiz->getElemento() << " ";
+        
+        aux = ptrRaiz->getHijoIzquierdo();
+        
+        while (aux!=NULL)
         {
-            if (j == 0) cout<< ptrRaiz->getElemento() << " "; // preorden
-            
-            recorridosDeOrden(ptrRaiz->getHijoIzquierdo(),j);
-            
-            if (j == 1) cout<< ptrRaiz->getElemento() << " "; // PostOrden
-            
-            recorridosDeOrden(ptrRaiz->getHermanoDerecho(),j);
-            
-            if (j == 2) cout<< ptrRaiz->getElemento() << " "; // WTF IS THIS?
+            aux = aux->getHermanoDerecho();
+            recorridoInorden(aux);
+
         }
         
         
     }
+    
     
     
     

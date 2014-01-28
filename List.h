@@ -145,7 +145,7 @@ class List
 
 		int getPosWithInfo(T info){
 			Node<T> *nodeAux = header;
-			for (int i=1; i<=getLenght();i++){
+			for (int i=0; i<getLenght();i++){
 				if (nodeAux->getInfo() == info){
 					return i;
 				}
