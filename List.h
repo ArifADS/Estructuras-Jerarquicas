@@ -234,4 +234,5 @@ class List
             trailer = nodo0;
         }
 };
+
 #endif

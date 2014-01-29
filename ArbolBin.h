@@ -12,6 +12,7 @@
 #include <iostream>
 #include "NodoArbolBin.h"
 #include "List.h"
+#include "Cola.cpp"
 
 #define self (*this)
 
@@ -120,51 +121,71 @@ public:
         delete aux;
     }
     
-    void bt(List<T>& inO, List<T>& preO)
+    void bt(Cola<T>& cPre, Cola<T>& cIn)
     {
-        nodoRaiz = buildTreePreIn(inO, preO, 0, 7);
+		NodoArbolBin<T>* returned = reconstruccionPre(cPre,cIn);
+		
+		
+        nodoRaiz = returned;
         
     }
     
     
-    NodoArbolBin<T>* buildTreePreIn(List<T>& inO, List<T>& preO, int inFrom, int inTo)
+    NodoArbolBin<T>* reconstruccionPre(Cola<T>& cPre, Cola<T>& cIn)
     {
-        NodoArbolBin<T>* nNodo;
-        
-        
-        if (preO.getLenght() == 0) {
-            return NULL;
-        }
-        
-        T preOelem = preO[0];
-        
-        preO.deleteAtPos(0);
-        
-        int i = inO.getPosWithInfo(preOelem);
-        
-        nNodo = new NodoArbolBin<T>(preOelem,buildTreePreIn(inO, preO,inFrom,i),buildTreePreIn(inO, preO,i,inTo));
-        
-        
-        
-        return nNodo;
-    }
+		Cola<T> cAux;
+		bool out = 0;
+		T elem = cPre.getFront(), elemSearch;
+		
+		
+		if (cIn.isEmpty())
+			return NULL;
+		
+		cPre.popFront();
+		
+		
+		while(!out)
+		{
+			elemSearch = cIn.getFront();
+			cIn.popFront();
+			if (elemSearch == elem)
+				out = 1;
+			else
+				cAux.pushBack(elemSearch);
+		}
+		
+		return new NodoArbolBin<T>(elem,reconstruccionPre(cPre,cAux),reconstruccionPre(cPre,cIn));
+		
+		
+		
+	}
+    
+  
     
     //RECORRIDOS
     
     void preorden()
     {
+		cout <<"Preorden:\t";
         recorridosDeOrden(self.nodoRaiz,0);
-    }
-    
-    void posorden()
-    {
-        recorridosDeOrden(nodoRaiz,1);
+        cout<<endl;
     }
     
     void inorden()
     {
-        recorridosDeOrden(nodoRaiz,2);
+		cout <<"Inorden:\t";
+        recorridosDeOrden(nodoRaiz,1);
+        cout<<endl;
     }
+    
+    void posorden()
+    {
+		cout <<"Posorden:\t";
+        recorridosDeOrden(nodoRaiz,2);
+        cout<<endl;
+    }
+    
+    
     
 private:
     static NodoArbolBin<T>* copiarNodos(NodoArbolBin<T>* p)

@@ -10,44 +10,48 @@
 #include "ArbolN.h"
 #include "ArbolBin.h"
 
-int main2();
+
+//int main2();
 
 
 int main()
 {
-    main2();
+   // main2();
     
-    return 0;
+    //return 0;
     ArbolBin<int> a;
     
-    List<int> preorden, inorden;
-    int i = 0;
+    Cola<int> preorden, inorden;
+
     /* preorder = {1, 2, 4, 5, 7, 3, 6, 8}
-     inorder = {4, 2, 5, 7, 1, 8, 6, 3}*/
+		inorder = {4, 2, 5, 7, 1, 8, 6, 3}*/
     
-    preorden.addInfoAtPos(1, i++);
-    preorden.addInfoAtPos(2, i++);
-    preorden.addInfoAtPos(4, i++);
-    preorden.addInfoAtPos(5, i++);
-    preorden.addInfoAtPos(7, i++);
-    preorden.addInfoAtPos(3, i++);
-    preorden.addInfoAtPos(6, i++);
-    preorden.addInfoAtPos(8, i++);
+    preorden.pushBack(1);
+    preorden.pushBack(2);
+    preorden.pushBack(4);
+    preorden.pushBack(5);
+    preorden.pushBack(7);
+    preorden.pushBack(3);
+    preorden.pushBack(6);
+    preorden.pushBack(8);
     
-    i=0;
+
+    inorden.pushBack(4);
+    inorden.pushBack(2);
+    inorden.pushBack(5);
+    inorden.pushBack(7);
+    inorden.pushBack(1);
+    inorden.pushBack(8);
+    inorden.pushBack(6);
+    inorden.pushBack(3);
+
     
-    inorden.addInfoAtPos(4, i++);
-    inorden.addInfoAtPos(2, i++);
-    inorden.addInfoAtPos(5, i++);
-    inorden.addInfoAtPos(7, i++);
-    inorden.addInfoAtPos(1, i++);
-    inorden.addInfoAtPos(8, i++);
-    inorden.addInfoAtPos(6, i++);
-    inorden.addInfoAtPos(3, i++);
-    
-    a.bt(inorden, preorden);
-    
+    //a.bt(inorden, preorden);
+    a.bt(preorden, inorden);
+	
+    a.preorden();
     a.inorden();
+    a.posorden();
     
 }
 
@@ -72,7 +76,7 @@ int main3(){
     return 0;
 }
 
-int main2()
+/*int main2()
 {
     cout << "begin\n";
     ArbolN<char> a('a');
@@ -117,5 +121,5 @@ int main2()
     
     
     return 0;
-}
+}*/
 

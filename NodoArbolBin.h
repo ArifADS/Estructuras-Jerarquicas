@@ -34,7 +34,7 @@ public:
     }
     
     T getElemento(){
-        return this?this->elem:NULL;
+        return this->elem;
     }
     
     
